@@ -842,11 +842,30 @@ function handleOffer(sdp){
     else if (s === "connecting") els.watchStatus.textContent = "Connecting to CAST…";
   };
   watch.pc.ontrack = function(e){
-    els.watchVideo.srcObject = e.streams[0];
-    els.watchPlayer.classList.remove("hidden");
-    els.watchControls.classList.remove("hidden");
-    attemptAutoplay();
-  };
+  var video = els.watchVideo;
+
+  video.autoplay = true;
+  video.playsInline = true;
+  video.preload = "auto";
+  video.srcObject = e.streams[0];
+
+  els.watchPlayer.classList.remove("hidden");
+  els.watchControls.classList.remove("hidden");
+
+  attemptAutoplay();
+}watch.pc.ontrack = function(e){
+  var video = els.watchVideo;
+
+  video.autoplay = true;
+  video.playsInline = true;
+  video.preload = "auto";
+  video.srcObject = e.streams[0];
+
+  els.watchPlayer.classList.remove("hidden");
+  els.watchControls.classList.remove("hidden");
+
+  attemptAutoplay();
+}
   watch.pc.setRemoteDescription(sdp).then(function(){
     watch.remoteSet = true;
     flushPending(watch);
